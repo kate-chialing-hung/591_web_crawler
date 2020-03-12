@@ -24,8 +24,8 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
 
 ## Potential Optimization
 - Change the way of getting content: 
-  * **Current solution:** simulate browser behavior with `selenium` and parse `html` (powerful but time & memory consuming)
-  * **Potential fix:** send requests directly and parse response `json` directly
+  * **Current solution:** simulate browser behavior with `selenium`, `chromedriver` and parse `html`
+  * **Potential fix:** send requests directly and parse the `json` response
 - Optimze computation method: 
   * **Current solution:** sequentially scan all pages, needs to wait in line
   * **Potential fix:** use parallel computation to get more timely results
