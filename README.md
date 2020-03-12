@@ -24,6 +24,6 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
 - Change the way of getting content: 
   * Current method: simulate browser behavior with `selenium` and parse `html` (powerful but time & memory consuming)
   * Potential fix: send requests directly and parse response `json` directly
-- Optimzie speed 
+- Computation resource: 
   * Current method: sequentially scan all pages, needs to wait in line
   * Potential fix: use parallel computation to get more timely results
