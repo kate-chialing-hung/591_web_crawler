@@ -6,13 +6,15 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
 - OS: Windows 7+
 - Python 3.7.0 
 - Packages: 
-    * pytesseract
+    * pandas==0.24.2
+    * Pillow==5.2.0
+    * pytesseract==0.3.2
         * install pytesseract via `pip`
         * install binary from https://github.com/UB-Mannheim/tesseract/wiki
         * add binary path to `PATH` in OS Settings
-    * PIL
-    * bs4
-    * selenium
+    * beautifulsoup4==4.6.3
+    * requests==2.23.0
+    * selenium==3.141.0
     * chrome driver 
        * download & install binary from https://chromedriver.chromium.org/downloads
 
@@ -22,8 +24,8 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
 
 ## Potential Optimization
 - Change the way of getting content: 
-  * **Current method:** simulate browser behavior with `selenium` and parse `html` (powerful but time & memory consuming)
+  * **Current solution:** simulate browser behavior with `selenium` and parse `html` (powerful but time & memory consuming)
   * **Potential fix:** send requests directly and parse response `json` directly
-- Computation resource: 
-  * **Current method:** sequentially scan all pages, needs to wait in line
+- Optimze computation method: 
+  * **Current solution:** sequentially scan all pages, needs to wait in line
   * **Potential fix:** use parallel computation to get more timely results
