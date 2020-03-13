@@ -20,7 +20,11 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
 
 ## How to Run
 
-
+## Known Issue
+- **Data repetition:** around ~700 columns are duplicate columns from a total of ~3700 columns in New Taipei City. 
+  * Possible reason 1: time lag from web crawling work 
+  * Possible reason 2: 591-website changes link sequence everytime browser is refreshed 
+  * Possible reason 2: 591-website repeats data itself 
 
 ## Potential Optimization
 - Change the way of getting content: 
