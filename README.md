@@ -25,6 +25,8 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
   * Possible reason 1: time lag from web crawling work 
   * Possible reason 2: 591-website changes link sequence everytime browser is refreshed 
   * Possible reason 2: 591-website repeats property links itself 
+- **Extend function:** extend function to include the latitude and longitude of property
+
 
 ## Potential Optimization
 - Change the way of getting content: 
