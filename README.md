@@ -25,7 +25,7 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
   * Possible reason 1: time lag from web crawling work 
   * Possible reason 2: 591-website changes link sequence everytime browser is refreshed 
   * Possible reason 2: 591-website repeats property links itself 
-- **Low Performance:** currently it takes ~2 hrs to parse 900 properties, which would take ~51 hrs to parse all ~23,000 properties online. 
+- **Low Performance:** currently it takes ~2 hrs to parse 900 properties, which would take ~51 hrs (2-3 days) to parse all ~23,000 properties online. 
 
 ## Possible Extension
 - **Extend function:** extend function to include the latitude and longitude of property
