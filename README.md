@@ -20,18 +20,22 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
 
 ## How to Run
 
-## Known Issue / Possible Extension
+## Known Issue
 - **Data repetition:** around ~700 columns are duplicate columns from a total of ~3700 columns in New Taipei City. 
   * Possible reason 1: time lag from web crawling work 
   * Possible reason 2: 591-website changes link sequence everytime browser is refreshed 
   * Possible reason 2: 591-website repeats property links itself 
+- **Low Performance:** currently it takes ~2 hrs to parse 900 properties, which would take ~51 hrs to parse all ~23,000 properties online. 
+
+## Possible Extension
 - **Extend function:** extend function to include the latitude and longitude of property
 
 
 ## Potential Optimization
-- Change the way of getting content: 
-  * **Current solution:** simulate browser behavior with `selenium`, `chromedriver` and parse `html`
-  * **Potential fix:** send requests directly and parse the `json` response
-- Optimze computation method: 
-  * **Current solution:** sequentially scan all pages, needs to wait in line
-  * **Potential fix:** use parallel computation to get more timely results
+- **Improve Performance & Data Repetition:** 
+   - Change the way of getting content: 
+     * Current solution: simulate browser behavior with `selenium`, `chromedriver` and parse `html`
+     * Potential fix: send requests directly and parse the `json` response
+   - Optimze computation method: 
+     * Current solution: sequentially scan all pages, needs to wait in line
+     * Potential fix: use parallel computation to get more timely results
