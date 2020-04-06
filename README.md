@@ -22,10 +22,21 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
 - **Connection:** set connection id & password if required
   * if your internet connection requires id & password, set them up in `bs4_591.py`: `RootPageInitiator.login()`
   * if not, skip this section 
-- **Run:** run `bs4_591.py`
+- **Get all proprety info:** run `bs4_591.py`, program outputs results for every county to `tmp/` in the form of `591_output_{county}_{cnt}.xlsx`
+  * scan main page for each counties (filter: "租屋"+"屋主"+指定縣市) & get total page count, ex: https://rent.591.com.tw/?kind=0&region=1&shType=host
+  * scan each page and get link for properties
+  * scan each property page to get property information
+
+- **Analyze:** run `analyze.py` to combine all `*.xlsx` files and plot an X-Y chart to demonstrate expected income for different landlords (below are results as of 2020/3/27)
+  * combine all county's information to one dataframe: 23,261 records
+  * dedup records: 21,294 records after dedup
+  * group by cell phone number to calculate total rental income for each landlord: recognized 15,266 numbers (landlords)
+  * plot an X-Y chart to demonstrate (see `591.png`)
+       * X-axis: total rental income for this landlord
+       * Y-axis: number of properties this landlord owns
 
 ## Known Issue
-- **Data repetition:** 1,967 columns are duplicate columns from a total of ~23,261 columns in all counties in Taiwan. (as of 2020/3)
+- **Data repetition:** 1,967 columns are duplicate columns from a total of ~23,261 columns in all counties in Taiwan. (as of 2020/3/27)
   * Possible reason 1: time lag from web crawling work 
   * Possible reason 2: 591-website changes link sequence everytime browser is refreshed 
   * Possible reason 2: 591-website repeats property links itself 
