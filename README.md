@@ -20,9 +20,9 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
 
 ## How to Run
 - **Connection:** set connection id & password if required
-  * if your internet connection requires id & password, set them up in `bs4_591.py`, class `RootPageInitiator`, function `login()`
+  * if your internet connection requires id & password, set them up in `bs4_591.py`: `RootPageInitiator.login()`
   * if not, skip this section 
-- **Run:** run `bs4_591.py` 
+- **Run:** run `bs4_591.py`
 
 ## Known Issue
 - **Data repetition:** 1,967 columns are duplicate columns from a total of ~23,261 columns in all counties in Taiwan. (as of 2020/3)
@@ -33,7 +33,6 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
 
 ## Possible Extension
 - **Extend function:** extend function to include the latitude and longitude of property
-
 
 ## Potential Optimization
 - **Improve Performance & Data Repetition:** 
