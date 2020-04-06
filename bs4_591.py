@@ -23,7 +23,9 @@ class PropertyPageParser():
     
     def parse_all(self): 
         response = requests.get(self.url, headers=self.headers, verify=False)
-        text = response.text        
+        text = response.text
+#        print(text)
+        
         soup = BeautifulSoup(text, "html.parser")
         
         property_number, address = self.parse_property_num_n_addr(soup)
@@ -109,6 +111,12 @@ class ListPageParser():
                 href_text = obj.find('a')['href']
                 href_text = href_text.replace(' ','')
                 url = 'http:'+href_text
+                print(url)
+#                try: 
+#                    print(url)
+#                    break
+#                except:
+#                    pass
                 try: 
                     data = [url]
                     page = PropertyPageParser(url=url)
@@ -116,7 +124,8 @@ class ListPageParser():
                     data_list.append(data)
                     sleeper.sleep()
                     break
-                except:
+                except Exception as e:
+                    print(e)
                     if(i==0): 
                         retry_pages.append(url)
                     elif(i==9): 
@@ -154,7 +163,10 @@ class RootPageInitiator():
         return browser
         
     def init(self, root_url): 
-        browser = webdriver.Chrome(executable_path="D:\chromedriver.exe")
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--remote-debugging-port=9222")
+        
+        browser = webdriver.Chrome(executable_path="D:\chromedriver.exe", options=chrome_options)
         browser.get(root_url)
         
         try:
@@ -182,12 +194,16 @@ class CountyParser():
         
         return browser
     
-    def parse(self, county): 
+    def parse(self, county, start_segment): 
         browser = self.link_county(county)
         soup = BeautifulSoup(browser.page_source, 'html.parser')
         pages = soup.find_all('a', {'class': 'pageNum-form'})
-        last_page = pages[-1]
-        total_pages = int(last_page.text)
+        try: 
+            last_page = pages[-1]
+            total_pages = int(last_page.text)
+
+        except: 
+            total_pages = 1
         print(county, ":", total_pages)
         browser.quit()
     
@@ -195,10 +211,10 @@ class CountyParser():
         all_retry_pages = dict()
         
         pages_per_seg = 30
-        total_segments = math.ceil(total_pages/pages_per_seg)
+        total_segment = math.ceil(total_pages/pages_per_seg)
         all_df = pd.DataFrame()
         
-        for page_seg in range(total_segments): 
+        for page_seg in range(start_segment, total_segment): 
             print("\n\nSEG: ", page_seg)
             browser = self.link_county(county)
             
@@ -240,29 +256,32 @@ if __name__ == '__main__':
     warnings.filterwarnings('ignore')
     
     root_url = 'https://rent.591.com.tw/?kind=0&shType=host'
-#    county_list = ['基隆市', '宜蘭縣']
-    county_list = ['台北市', '新北市', '桃園市', '新竹市', '新竹縣', '宜蘭縣', '基隆市', 
-                   '台中市','彰化縣','雲林縣','苗栗縣','南投縣',
-                   '高雄市','台南市','嘉義市','嘉義縣','屏東縣',
+    county_list = ['台北市', '新北市', '桃園市', '新竹市', '新竹縣', '宜蘭縣', '基隆市', '台中市','彰化縣','雲林縣','苗栗縣','南投縣','高雄市','台南市','嘉義市','嘉義縣','屏東縣',
                    '台東縣','花蓮縣','澎湖縣','金門縣','連江縣']
-    all_counties_df = pd.DataFrame()
-    all_counties_retry = dict()
-    all_counties_error = dict()
+#    all_counties_df = pd.DataFrame()
+#    all_counties_retry = dict()
+#    all_counties_error = dict()
     
     for county in county_list: 
-        parser = CountyParser()
-        all_df, all_retry_pages, all_error_pages = parser.parse(county)
+#        if(county=='高雄市'): 
+#            start_segment = 3
+#        else: 
+        if(True): 
+            start_segment = 0 
         
-        all_df.to_excel('tmp/591_output_{}.xlsx'.format(county), encoding='big5')
+        parser = CountyParser()
+        all_df, all_retry_pages, all_error_pages = parser.parse(county, start_segment)
+        
+#        all_df.to_excel('tmp/591_output_{}.xlsx'.format(county), encoding='big5')
         print("*"*8, "retry_pages: {}".format(len(all_retry_pages)), "*"*8)
         print(all_retry_pages)
         print("\n", "*"*8, "error_pages: {}".format(len(all_error_pages)), "*"*8)
         print(all_error_pages)
         
-        all_counties_df = all_counties_df.append(all_df, ignore_index=True)
-        all_counties_retry.update({county:all_retry_pages})
-        all_counties_error.update({county:all_error_pages})
+#        all_counties_df = all_counties_df.append(all_df, ignore_index=True)
+#        all_counties_retry.update({county:all_retry_pages})
+#        all_counties_error.update({county:all_error_pages})
 
-    all_counties_df.to_excel('591_output.xlsx', encoding='big5')
-    print("retry: ", all_counties_retry)
-    print("error: ", all_counties_error)
+#    all_counties_df.to_excel('591_output.xlsx', encoding='big5')
+#    print("retry: ", all_counties_retry)
+#    print("error: ", all_counties_error)

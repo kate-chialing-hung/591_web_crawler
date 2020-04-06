@@ -7,15 +7,19 @@ Created on Thu Mar 12 15:52:14 2020
 import pandas as pd
 import matplotlib.pyplot as plt
 import math
+import glob, os
 
 if __name__ == '__main__':     
     df = pd.DataFrame()
 #    for i in range(5): 
-    if(True): 
-#        partial_df = pd.read_excel('591_output.xlsx'.format(i), index_col=0)
-        df = pd.read_excel('591_output.xlsx', index_col=0)
-#        df = df.append(partial_df, ignore_index=True)
+    os.chdir("tmp")
+    for file in glob.glob("*.xlsx"): 
+#    if(True): 
+        partial_df = pd.read_excel(file, index_col=0)
+#        df = pd.read_excel('591_output.xlsx', index_col=0)
+        df = df.append(partial_df, ignore_index=True)
         
+    df.to_excel('../591_output.xlsx')
 #%%
     print(df.head())
     print(df['property_number'].count())
@@ -38,7 +42,7 @@ if __name__ == '__main__':
     y = number['property_number']
     
     plt.figure(figsize=(5*5, 1*5), dpi=100)
-    plt.scatter(x, y, alpha=0.3, s=[150 for i in range(len(x))], edgecolors='none', marker='o')
+    plt.scatter(x, y, alpha=0.1, s=[150 for i in range(len(x))], edgecolors='none', marker='o')
     plt.ylim(0, y.max()+1)
     plt.xlim(0, x.max()+10)
     tick = 10
@@ -47,5 +51,6 @@ if __name__ == '__main__':
     plt.xlabel("monthly income (K NTD)")
     plt.ylabel("number of objects")
     
-    plt.savefig('591.png')
+    plt.savefig('../591.png')
     plt.show()
+    
