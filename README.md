@@ -19,9 +19,13 @@ An automated web crawler for the house rental website: https://www.591.com.tw/
        * download & install binary from https://chromedriver.chromium.org/downloads
 
 ## How to Run
+- **Connection:** set connection id & password if required
+  * if your internet connection requires id & password, set them up in `bs4_591.py`, class `RootPageInitiator`, function `login()`
+  * if not, skip this section 
+- **Run:** run `bs4_591.py` 
 
 ## Known Issue
-- **Data repetition:** around ~700 columns are duplicate columns from a total of ~3700 columns in New Taipei City. 
+- **Data repetition:** 1,967 columns are duplicate columns from a total of ~23,261 columns in all counties in Taiwan. (as of 2020/3)
   * Possible reason 1: time lag from web crawling work 
   * Possible reason 2: 591-website changes link sequence everytime browser is refreshed 
   * Possible reason 2: 591-website repeats property links itself 
